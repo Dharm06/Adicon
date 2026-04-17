@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADICON - Agriculture Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-deep: #1a4d2e;
+    --green-mid: #2d7a3a;
+    --green-light: #4caf50;
+    --green-pale: #e8f5e9;
+    --gold: #f4a500;
+    --gold-light: #ffd54f;
+    --brown: #5d4037;
+    --cream: #fefdf6;
+    --soil: #6d4c41;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--green-deep);
+    overflow-x: hidden;
+  }
+
+  /* ---- ANIMATED BACKGROUND LEAVES ---- */
+  .leaf-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .leaf-float {
+    position: absolute;
+    opacity: 0.07;
+    animation: floatLeaf linear infinite;
+  }
+
+  .leaf-float svg { display: block; }
+
+  @keyframes floatLeaf {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    5%   { opacity: 0.07; }
+    95%  { opacity: 0.07; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(26,77,46,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(76,175,80,0.3);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--green-deep);
+    padding: 0.5rem 1.4rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244,165,0,0.4);
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    background: linear-gradient(135deg, #0f2d1a 0%, #1a4d2e 40%, #2d7a3a 100%);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(244,165,0,0.15);
+    border: 1px solid rgba(244,165,0,0.4);
+    color: var(--gold-light);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(244,165,0,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* HERO CROP ILLUSTRATION */
+  .hero-visual {
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 55%;
+    max-width: 700px;
+    z-index: 1;
+    opacity: 0.18;
+  }
+
+  /* Animated crop rows at bottom of hero */
+  .crop-row {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 2rem;
+    z-index: 1;
+    height: 120px;
+    overflow: hidden;
+  }
+
+  .crop-plant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: cropGrow 2s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes cropGrow {
+    0%   { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+    100% { transform: scaleY(1); opacity: 0.6; transform-origin: bottom; }
+  }
+
+  /* FLOATING PARTICLES */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(76,175,80,0.3);
+    animation: particleDrift linear infinite;
+  }
+
+  @keyframes particleDrift {
+    0%   { transform: translateY(0) scale(1); opacity: 0.3; }
+    50%  { opacity: 0.6; }
+    100% { transform: translateY(-60px) scale(0.5); opacity: 0; }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 4rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--green-mid);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 50px;
+    background: #e0e0e0;
+  }
+
+  /* PRODUCTS SECTION */
+  .section {
+    position: relative;
+    z-index: 2;
+    padding: 5rem 3rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--green-pale);
+    color: var(--green-mid);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--green-deep);
+    line-height: 1.3;
+  }
+
+  .section-title span { color: var(--green-mid); }
+
+  .section-subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    font-weight: 300;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* Product Cards */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--green-mid), var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(26,77,46,0.12);
+  }
+
+  .product-card:hover::before { opacity: 1; }
+
+  .product-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.8rem;
+  }
+
+  .product-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-card p {
+    font-size: 0.88rem;
+    color: #777;
+    line-height: 1.7;
+  }
+
+  .product-card .learn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--green-mid);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+
+  .product-card:hover .learn-more { gap: 0.6rem; }
+
+  /* GROWING WHEAT ANIMATION */
+  .wheat-section {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to bottom, var(--green-pale), var(--cream));
+    padding: 5rem 3rem;
+    overflow: hidden;
+  }
+
+  .wheat-field {
+    position: relative;
+    height: 200px;
+    margin-top: 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .wheat-stalk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: wheatSway ease-in-out infinite alternate;
+  }
+
+  @keyframes wheatSway {
+    0%   { transform: rotate(-3deg); transform-origin: bottom; }
+    100% { transform: rotate(3deg); transform-origin: bottom; }
+  }
+
+  /* WHY ADICON */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feature-item {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    background: var(--white);
+    border: 1px solid #eee;
+    transition: all 0.3s;
+  }
+
+  .feature-item:hover {
+    background: var(--green-deep);
+    border-color: var(--green-deep);
+    transform: translateY(-5px);
+  }
+
+  .feature-item:hover h4,
+  .feature-item:hover p { color: var(--white); }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .feature-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .feature-item p {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.6;
+    transition: color 0.3s;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, var(--green-deep), #0a2416);
+    padding: 5rem 3rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .cta-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    color: var(--white);
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+
+  .cta-banner h2 span { color: var(--gold); }
+
+  .cta-banner p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  /* Leaf decorations on CTA */
+  .cta-leaf {
+    position: absolute;
+    opacity: 0.06;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 2;
+    background: #0a1f12;
+    color: rgba(255,255,255,0.6);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo { font-size: 1.4rem; }
+  footer p { font-size: 0.82rem; }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .section { padding: 3rem 1.5rem; }
+    .stats-bar { padding: 2rem 1.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING LEAF BACKGROUND -->
+<div class="leaf-bg" id="leafBg"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 36 36" fill="none">
+      <path d="M18 2C18 2 8 10 8 20C8 27 12.5 33 18 33C23.5 33 28 27 28 20C28 10 18 2 18 2Z" fill="#f4a500"/>
+      <path d="M18 8C18 8 13 16 14 22C15 26 18 28 18 28" stroke="#1a4d2e" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="18" cy="20" r="3" fill="#1a4d2e"/>
+    </svg>
+    ADICON
+  </div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Get a Quote</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Particles -->
+  <div id="heroParticles"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <circle cx="6" cy="6" r="5" fill="#f4a500" opacity="0.4"/>
+        <circle cx="6" cy="6" r="3" fill="#f4a500"/>
+      </svg>
+      Manufacturer &amp; Wholesaler Since 2001
+    </div>
+    <h1>Growing a <span>Greener</span> Future for Every Farmer</h1>
+    <p>ADICON delivers science-backed pesticides, herbicides, fungicides, micro-nutrients, bio-pesticides &amp; plant growth regulators — empowering farmers to maximise every harvest.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-outline">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Hero crop animation -->
+  <div class="crop-row" id="cropRow"></div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-number">25+</div>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number">200+</div>
+    <div class="stat-label">Product Range</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number">50K+</div>
+    <div class="stat-label">Farmers Served</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number">18+</div>
+    <div class="stat-label">States Covered</div>
+  </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<section class="section" id="products">
+  <div class="section-header reveal">
+    <div class="section-tag">Our Portfolio</div>
+    <h2 class="section-title">Complete <span>Agri-Input</span> Solutions</h2>
+    <p class="section-subtitle">From soil to shelf — every product crafted with precision for maximum crop yield and safety.</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-icon" style="background:#e8f5e9;">🌿</div>
+      <h3>Pesticides</h3>
+      <p>Advanced formulations to protect crops from a wide spectrum of insects and pests, ensuring healthy plant development.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+    <div class="product-card reveal" style="animation-delay:0.1s">
+      <div class="product-icon" style="background:#fff8e1;">🌾</div>
+      <h3>Herbicides</h3>
+      <p>Selective and non-selective weed control solutions that safeguard crops while eliminating unwanted competition.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+    <div class="product-card reveal" style="animation-delay:0.2s">
+      <div class="product-icon" style="background:#e3f2fd;">🍄</div>
+      <h3>Fungicides</h3>
+      <p>Protective and curative fungicide blends to combat plant diseases at the source and prevent yield loss.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+    <div class="product-card reveal" style="animation-delay:0.3s">
+      <div class="product-icon" style="background:#fce4ec;">💧</div>
+      <h3>Micro-Nutrient Fertilisers</h3>
+      <p>Balanced mix-micro nutrient blends that address soil deficiencies and unlock a plant's full genetic potential.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+    <div class="product-card reveal" style="animation-delay:0.4s">
+      <div class="product-icon" style="background:#f3e5f5;">🌱</div>
+      <h3>Bio-Pesticides</h3>
+      <p>Eco-friendly biological pest management derived from natural organisms — safe for soil, crops, and the environment.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+    <div class="product-card reveal" style="animation-delay:0.5s">
+      <div class="product-icon" style="background:#e0f7fa;">🌻</div>
+      <h3>Plant Growth Regulators</h3>
+      <p>Hormone-based solutions to accelerate root development, improve flowering, and enhance overall plant vigour.</p>
+      <a class="learn-more" href="#">Discover Range →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHEAT FIELD ANIMATION SECTION -->
+<div class="wheat-section" id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">Our Roots</div>
+    <h2 class="section-title">Rooted in <span>Agriculture,</span> Growing with India</h2>
+    <p class="section-subtitle">Over two decades of trusted partnership with farmers across the nation — because every field deserves the best care.</p>
+  </div>
+
+  <div class="wheat-field" id="wheatField"></div>
+</div>
+
+<!-- WHY ADICON -->
+<section class="section" id="why" style="background:#fff;">
+  <div class="section-header reveal">
+    <div class="section-tag">Why Choose Us</div>
+    <h2 class="section-title">The <span>ADICON</span> Advantage</h2>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-item reveal">
+      <span class="feature-icon">🔬</span>
+      <h4>R&amp;D Backed Formulas</h4>
+      <p>Every product goes through rigorous field testing and laboratory validation before reaching your crop.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.1s">
+      <span class="feature-icon">🏭</span>
+      <h4>Direct Manufacturer</h4>
+      <p>We produce what we sell — ensuring quality control at every stage and competitive wholesale pricing.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.2s">
+      <span class="feature-icon">🌍</span>
+      <h4>Pan-India Distribution</h4>
+      <p>A wide distribution network ensures timely availability across 18+ states, right at the farm gate.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.3s">
+      <span class="feature-icon">♻️</span>
+      <h4>Eco-Conscious Products</h4>
+      <p>Our bio-pesticide range minimises chemical load on soil and water, supporting sustainable farming.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.4s">
+      <span class="feature-icon">🤝</span>
+      <h4>Expert Agronomist Support</h4>
+      <p>Our on-ground agronomy team offers personalised guidance to help farmers achieve maximum yield.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.5s">
+      <span class="feature-icon">📜</span>
+      <h4>Certified &amp; Compliant</h4>
+      <p>All products comply with CIB&RC regulations and carry proper registration certification.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="contact">
+  <!-- decorative leaves -->
+  <svg class="cta-leaf" style="left:-50px;top:-50px;width:300px;height:300px;" viewBox="0 0 200 200">
+    <ellipse cx="100" cy="100" rx="80" ry="40" transform="rotate(-30 100 100)" fill="#4caf50"/>
+  </svg>
+  <svg class="cta-leaf" style="right:-30px;bottom:-30px;width:250px;height:250px;" viewBox="0 0 200 200">
+    <ellipse cx="100" cy="100" rx="70" ry="35" transform="rotate(45 100 100)" fill="#4caf50"/>
+  </svg>
+
+  <div style="position:relative;z-index:2;">
+    <div class="section-tag" style="background:rgba(244,165,0,0.2);color:#ffd54f;">Partner With Us</div>
+    <h2 style="margin-top:0.8rem;">Ready to <span>Cultivate</span> Success?</h2>
+    <p>Join thousands of distributors and farmers who trust ADICON for quality agri-inputs delivered on time.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="alert('Thank you! Our team will contact you shortly.')">Request a Quote</button>
+      <button class="btn-outline">Download Catalogue</button>
+    </div>
+    <div style="margin-top:2.5rem;display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;">
+      <div style="color:rgba(255,255,255,0.7);font-size:0.9rem;">📞 +91 98765 43210</div>
+      <div style="color:rgba(255,255,255,0.7);font-size:0.9rem;">✉️ info@adicon.in</div>
+      <div style="color:rgba(255,255,255,0.7);font-size:0.9rem;">📍 Rajkot, Gujarat, India</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo" style="font-size:1.3rem;">ADICON</div>
+  <p>© 2025 ADICON Agri Solutions. Manufacturer &amp; Wholesaler of Premium Agri-Inputs.</p>
+  <p style="font-size:0.78rem;">Pesticides · Herbicides · Fungicides · Fertilisers · Bio-Pesticides · PGR</p>
+</footer>
+
+<script>
+// ---- FLOATING LEAF BACKGROUND ----
+const leafSVGs = [
+  `<svg viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 5 C5 15 2 35 20 55 C38 35 35 15 20 5Z" fill="#2d7a3a"/>
+    <line x1="20" y1="5" x2="20" y2="55" stroke="#1a4d2e" stroke-width="1"/>
+  </svg>`,
+  `<svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="20" rx="28" ry="15" fill="#4caf50" transform="rotate(-20 30 20)"/>
+    <line x1="5" y1="30" x2="55" y2="10" stroke="#1a4d2e" stroke-width="1"/>
+  </svg>`,
+  `<svg viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 5 C8 20 5 50 25 65 C45 50 42 20 25 5Z" fill="#388e3c"/>
+    <path d="M25 10 C18 20 16 40 25 60" stroke="#1a4d2e" stroke-width="1" fill="none"/>
+    <path d="M25 20 C30 15 38 18 40 25" stroke="#1a4d2e" stroke-width="0.7" fill="none"/>
+    <path d="M25 35 C20 30 12 32 10 39" stroke="#1a4d2e" stroke-width="0.7" fill="none"/>
+  </svg>`
+];
+
+const leafBg = document.getElementById('leafBg');
+for (let i = 0; i < 20; i++) {
+  const div = document.createElement('div');
+  div.className = 'leaf-float';
+  const size = 30 + Math.random() * 60;
+  div.style.cssText = `
+    left: ${Math.random()*100}%;
+    width: ${size}px;
+    height: ${size}px;
+    animation-duration: ${8 + Math.random() * 15}s;
+    animation-delay: ${Math.random() * -20}s;
+  `;
+  div.innerHTML = leafSVGs[Math.floor(Math.random() * leafSVGs.length)];
+  leafBg.appendChild(div);
+}
+
+// ---- HERO PARTICLES ----
+const particleContainer = document.getElementById('heroParticles');
+particleContainer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;';
+for (let i = 0; i < 15; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = 4 + Math.random() * 10;
+  p.style.cssText = `
+    left: ${Math.random()*100}%;
+    bottom: ${Math.random()*60}%;
+    width: ${size}px;
+    height: ${size}px;
+    animation-duration: ${4 + Math.random() * 6}s;
+    animation-delay: ${Math.random() * -8}s;
+    background: rgba(76,175,80,${0.2 + Math.random()*0.3});
+  `;
+  particleContainer.appendChild(p);
+}
+
+// ---- HERO CROP ROW ----
+function makeCropSVG(type, h) {
+  if (type === 'wheat') {
+    return `<svg width="20" height="${h}" viewBox="0 0 20 ${h}" fill="none">
+      <line x1="10" y1="${h}" x2="10" y2="0" stroke="#4caf50" stroke-width="2"/>
+      <ellipse cx="10" cy="8" rx="6" ry="10" fill="#81c784"/>
+      <ellipse cx="4" cy="22" rx="4" ry="6" fill="#66bb6a" transform="rotate(-20 4 22)"/>
+      <ellipse cx="16" cy="22" rx="4" ry="6" fill="#66bb6a" transform="rotate(20 16 22)"/>
+    </svg>`;
+  }
+  return `<svg width="24" height="${h}" viewBox="0 0 24 ${h}" fill="none">
+    <line x1="12" y1="${h}" x2="12" y2="${h*0.4}" stroke="#388e3c" stroke-width="2"/>
+    <ellipse cx="12" cy="${h*0.3}" rx="10" ry="8" fill="#2d7a3a" opacity="0.8"/>
+    <ellipse cx="4" cy="${h*0.5}" rx="7" ry="5" fill="#388e3c" transform="rotate(-30 4 ${h*0.5})"/>
+    <ellipse cx="20" cy="${h*0.5}" rx="7" ry="5" fill="#388e3c" transform="rotate(30 20 ${h*0.5})"/>
+  </svg>`;
+}
+
+const cropRow = document.getElementById('cropRow');
+const types = ['wheat','plant','wheat','plant','wheat','plant','wheat','plant','wheat','plant','wheat','plant'];
+types.forEach((t, i) => {
+  const div = document.createElement('div');
+  div.className = 'crop-plant';
+  const h = 60 + Math.random() * 50;
+  div.innerHTML = makeCropSVG(t, h);
+  div.style.animationDelay = (i * 0.15) + 's';
+  cropRow.appendChild(div);
+});
+
+// ---- WHEAT FIELD ANIMATION ----
+const wheatField = document.getElementById('wheatField');
+for (let i = 0; i < 50; i++) {
+  const stalk = document.createElement('div');
+  stalk.className = 'wheat-stalk';
+  const h = 80 + Math.random() * 100;
+  const delay = (Math.random() * 3).toFixed(2);
+  const dur = (2 + Math.random() * 2).toFixed(2);
+  stalk.style.cssText = `animation-duration:${dur}s;animation-delay:-${delay}s;`;
+  stalk.innerHTML = `<svg width="14" height="${h}" viewBox="0 0 14 ${h}" fill="none">
+    <line x1="7" y1="${h}" x2="7" y2="${h*0.25}" stroke="#a5d6a7" stroke-width="1.5"/>
+    <ellipse cx="7" cy="${h*0.15}" rx="4" ry="8" fill="#81c784"/>
+    <ellipse cx="3" cy="${h*0.3}" rx="3" ry="5" fill="#66bb6a" transform="rotate(-15 3 ${h*0.3})"/>
+    <ellipse cx="11" cy="${h*0.3}" rx="3" ry="5" fill="#66bb6a" transform="rotate(15 11 ${h*0.3})"/>
+    <ellipse cx="3" cy="${h*0.5}" rx="2.5" ry="4" fill="#4caf50" transform="rotate(-10 3 ${h*0.5})"/>
+    <ellipse cx="11" cy="${h*0.5}" rx="2.5" ry="4" fill="#4caf50" transform="rotate(10 11 ${h*0.5})"/>
+  </svg>`;
+  wheatField.appendChild(stalk);
+}
+
+// ---- SCROLL REVEAL ----
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
