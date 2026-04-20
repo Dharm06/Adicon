@@ -352,9 +352,6 @@ export default function HomePage() {
           <p>Join thousands of distributors and farmers who trust ADICON for quality agri-inputs delivered on time.</p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <button className="btn-primary" onClick={() => window.alert("Thank you! Our team will contact you shortly.")}>Request a Quote</button>
-            <a className="btn-outline" href="/api/catalogue" target="_blank" rel="noopener noreferrer">
-              Download Catalogue
-            </a>
           </div>
           <div style={{ marginTop: "2.5rem", display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}>
             <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>📞 +91 98765 43210</div>
