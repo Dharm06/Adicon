@@ -1,47 +1,58 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const leafSVGs = [
   `<svg viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 5 C5 15 2 35 20 55 C38 35 35 15 20 5Z" fill="#2d7a3a"/>
-    <line x1="20" y1="5" x2="20" y2="55" stroke="#1a4d2e" stroke-width="1"/>
+    <path d="M20 5 C5 15 2 35 20 55 C38 35 35 15 20 5Z" fill="#1f6fb2"/>
+    <line x1="20" y1="5" x2="20" y2="55" stroke="#0f2f5f" stroke-width="1"/>
   </svg>`,
   `<svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="30" cy="20" rx="28" ry="15" fill="#4caf50" transform="rotate(-20 30 20)"/>
-    <line x1="5" y1="30" x2="55" y2="10" stroke="#1a4d2e" stroke-width="1"/>
+    <ellipse cx="30" cy="20" rx="28" ry="15" fill="#4ea8de" transform="rotate(-20 30 20)"/>
+    <line x1="5" y1="30" x2="55" y2="10" stroke="#0f2f5f" stroke-width="1"/>
   </svg>`,
   `<svg viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M25 5 C8 20 5 50 25 65 C45 50 42 20 25 5Z" fill="#388e3c"/>
-    <path d="M25 10 C18 20 16 40 25 60" stroke="#1a4d2e" stroke-width="1" fill="none"/>
-    <path d="M25 20 C30 15 38 18 40 25" stroke="#1a4d2e" stroke-width="0.7" fill="none"/>
-    <path d="M25 35 C20 30 12 32 10 39" stroke="#1a4d2e" stroke-width="0.7" fill="none"/>
+    <path d="M25 5 C8 20 5 50 25 65 C45 50 42 20 25 5Z" fill="#1b5f9a"/>
+    <path d="M25 10 C18 20 16 40 25 60" stroke="#0f2f5f" stroke-width="1" fill="none"/>
+    <path d="M25 20 C30 15 38 18 40 25" stroke="#0f2f5f" stroke-width="0.7" fill="none"/>
+    <path d="M25 35 C20 30 12 32 10 39" stroke="#0f2f5f" stroke-width="0.7" fill="none"/>
   </svg>`,
 ];
 
 function makeCropSVG(type, h) {
   if (type === "wheat") {
     return `<svg width="20" height="${h}" viewBox="0 0 20 ${h}" fill="none">
-      <line x1="10" y1="${h}" x2="10" y2="0" stroke="#4caf50" stroke-width="2"/>
-      <ellipse cx="10" cy="8" rx="6" ry="10" fill="#81c784"/>
-      <ellipse cx="4" cy="22" rx="4" ry="6" fill="#66bb6a" transform="rotate(-20 4 22)"/>
-      <ellipse cx="16" cy="22" rx="4" ry="6" fill="#66bb6a" transform="rotate(20 16 22)"/>
+      <line x1="10" y1="${h}" x2="10" y2="0" stroke="#4ea8de" stroke-width="2"/>
+      <ellipse cx="10" cy="8" rx="6" ry="10" fill="#8ecae6"/>
+      <ellipse cx="4" cy="22" rx="4" ry="6" fill="#5ea7dc" transform="rotate(-20 4 22)"/>
+      <ellipse cx="16" cy="22" rx="4" ry="6" fill="#5ea7dc" transform="rotate(20 16 22)"/>
     </svg>`;
   }
   return `<svg width="24" height="${h}" viewBox="0 0 24 ${h}" fill="none">
-    <line x1="12" y1="${h}" x2="12" y2="${h * 0.4}" stroke="#388e3c" stroke-width="2"/>
-    <ellipse cx="12" cy="${h * 0.3}" rx="10" ry="8" fill="#2d7a3a" opacity="0.8"/>
-    <ellipse cx="4" cy="${h * 0.5}" rx="7" ry="5" fill="#388e3c" transform="rotate(-30 4 ${h * 0.5})"/>
-    <ellipse cx="20" cy="${h * 0.5}" rx="7" ry="5" fill="#388e3c" transform="rotate(30 20 ${h * 0.5})"/>
+    <line x1="12" y1="${h}" x2="12" y2="${h * 0.4}" stroke="#1b5f9a" stroke-width="2"/>
+    <ellipse cx="12" cy="${h * 0.3}" rx="10" ry="8" fill="#1f6fb2" opacity="0.8"/>
+    <ellipse cx="4" cy="${h * 0.5}" rx="7" ry="5" fill="#1b5f9a" transform="rotate(-30 4 ${h * 0.5})"/>
+    <ellipse cx="20" cy="${h * 0.5}" rx="7" ry="5" fill="#1b5f9a" transform="rotate(30 20 ${h * 0.5})"/>
   </svg>`;
 }
+
+const STAT_ITEMS = [
+  { label: "Years of Excellence", end: 25, suffix: "+" },
+  { label: "Product Range", end: 200, suffix: "+" },
+  { label: "Farmers Served", end: 50, suffix: "K+" },
+  { label: "States Covered", end: 18, suffix: "+" },
+];
 
 export default function HomePage() {
   const leafBgRef = useRef(null);
   const heroParticlesRef = useRef(null);
   const cropRowRef = useRef(null);
   const wheatFieldRef = useRef(null);
+  const statsBarRef = useRef(null);
+  const statsAnimatedRef = useRef(false);
+  const [statValues, setStatValues] = useState(STAT_ITEMS.map(() => 0));
 
   useEffect(() => {
     const leafBg = leafBgRef.current;
@@ -78,7 +89,7 @@ export default function HomePage() {
         height: ${size}px;
         animation-duration: ${4 + Math.random() * 6}s;
         animation-delay: ${Math.random() * -8}s;
-        background: rgba(76,175,80,${0.2 + Math.random() * 0.3});
+        background: rgba(78,168,222,${0.2 + Math.random() * 0.3});
       `;
       particleContainer.appendChild(p);
     }
@@ -101,12 +112,12 @@ export default function HomePage() {
       const dur = (2 + Math.random() * 2).toFixed(2);
       stalk.style.cssText = `animation-duration:${dur}s;animation-delay:-${delay}s;`;
       stalk.innerHTML = `<svg width="14" height="${h}" viewBox="0 0 14 ${h}" fill="none">
-        <line x1="7" y1="${h}" x2="7" y2="${h * 0.25}" stroke="#a5d6a7" stroke-width="1.5"/>
-        <ellipse cx="7" cy="${h * 0.15}" rx="4" ry="8" fill="#81c784"/>
-        <ellipse cx="3" cy="${h * 0.3}" rx="3" ry="5" fill="#66bb6a" transform="rotate(-15 3 ${h * 0.3})"/>
-        <ellipse cx="11" cy="${h * 0.3}" rx="3" ry="5" fill="#66bb6a" transform="rotate(15 11 ${h * 0.3})"/>
-        <ellipse cx="3" cy="${h * 0.5}" rx="2.5" ry="4" fill="#4caf50" transform="rotate(-10 3 ${h * 0.5})"/>
-        <ellipse cx="11" cy="${h * 0.5}" rx="2.5" ry="4" fill="#4caf50" transform="rotate(10 11 ${h * 0.5})"/>
+        <line x1="7" y1="${h}" x2="7" y2="${h * 0.25}" stroke="#b7dcff" stroke-width="1.5"/>
+        <ellipse cx="7" cy="${h * 0.15}" rx="4" ry="8" fill="#8ecae6"/>
+        <ellipse cx="3" cy="${h * 0.3}" rx="3" ry="5" fill="#5ea7dc" transform="rotate(-15 3 ${h * 0.3})"/>
+        <ellipse cx="11" cy="${h * 0.3}" rx="3" ry="5" fill="#5ea7dc" transform="rotate(15 11 ${h * 0.3})"/>
+        <ellipse cx="3" cy="${h * 0.5}" rx="2.5" ry="4" fill="#4ea8de" transform="rotate(-10 3 ${h * 0.5})"/>
+        <ellipse cx="11" cy="${h * 0.5}" rx="2.5" ry="4" fill="#4ea8de" transform="rotate(10 11 ${h * 0.5})"/>
       </svg>`;
       wheatField.appendChild(stalk);
     }
@@ -131,19 +142,61 @@ export default function HomePage() {
     };
   }, []);
 
+  useEffect(() => {
+    const statsBar = statsBarRef.current;
+    if (!statsBar) return;
+
+    let frameId;
+    const duration = 2000;
+    const startAnimation = () => {
+      const start = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        setStatValues(STAT_ITEMS.map((item) => Math.round(item.end * progress)));
+
+        if (progress < 1) frameId = requestAnimationFrame(step);
+      };
+
+      frameId = requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !statsAnimatedRef.current) {
+            statsAnimatedRef.current = true;
+            startAnimation();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(statsBar);
+
+    return () => {
+      observer.disconnect();
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, []);
+
   return (
     <>
       <div className="leaf-bg" id="leafBg" ref={leafBgRef} />
 
       <nav>
-        <div className="logo">
-          <svg className="logo-icon" viewBox="0 0 36 36" fill="none">
-            <path d="M18 2C18 2 8 10 8 20C8 27 12.5 33 18 33C23.5 33 28 27 28 20C28 10 18 2 18 2Z" fill="#f4a500" />
-            <path d="M18 8C18 8 13 16 14 22C15 26 18 28 18 28" stroke="#1a4d2e" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="18" cy="20" r="3" fill="#1a4d2e" />
-          </svg>
-          ADICON
-        </div>
+        <Link href="/" className="logo-link nav-logo-link">
+          <Image
+            src="/logofinal.png"
+            alt="Adicon Logo"
+            width={280}
+            height={90}
+            className="logo-img nav-logo-img"
+            priority
+          />
+        </Link>
         <ul className="nav-links">
           <li><a href="#products">Products</a></li>
           <li><a href="#about">About</a></li>
@@ -173,26 +226,16 @@ export default function HomePage() {
         <div className="crop-row" id="cropRow" ref={cropRowRef} />
       </section>
 
-      <div className="stats-bar">
-        <div className="stat-item">
-          <div className="stat-number">25+</div>
-          <div className="stat-label">Years of Excellence</div>
-        </div>
-        <div className="stat-divider" />
-        <div className="stat-item">
-          <div className="stat-number">200+</div>
-          <div className="stat-label">Product Range</div>
-        </div>
-        <div className="stat-divider" />
-        <div className="stat-item">
-          <div className="stat-number">50K+</div>
-          <div className="stat-label">Farmers Served</div>
-        </div>
-        <div className="stat-divider" />
-        <div className="stat-item">
-          <div className="stat-number">18+</div>
-          <div className="stat-label">States Covered</div>
-        </div>
+      <div className="stats-bar" ref={statsBarRef}>
+        {STAT_ITEMS.map((item, index) => (
+          <Fragment key={item.label}>
+            <div className="stat-item">
+              <div className="stat-number">{`${statValues[index]}${item.suffix}`}</div>
+              <div className="stat-label">{item.label}</div>
+            </div>
+            {index < STAT_ITEMS.length - 1 ? <div className="stat-divider" /> : null}
+          </Fragment>
+        ))}
       </div>
 
       <section className="section" id="products">
@@ -204,7 +247,7 @@ export default function HomePage() {
 
         <div className="products-grid">
           <div className="product-card reveal">
-            <div className="product-icon" style={{ background: "#e8f5e9" }}>🌿</div>
+            <div className="product-icon" style={{ background: "#e8f4ff" }}>🌿</div>
             <h3>Pesticides</h3>
             <p>Advanced formulations to protect crops from a wide spectrum of insects and pests, ensuring healthy plant development.</p>
             <a className="learn-more" href="#">Discover Range →</a>
@@ -297,10 +340,10 @@ export default function HomePage() {
 
       <section className="cta-banner" id="contact">
         <svg className="cta-leaf" style={{ left: "-50px", top: "-50px", width: "300px", height: "300px" }} viewBox="0 0 200 200">
-          <ellipse cx="100" cy="100" rx="80" ry="40" transform="rotate(-30 100 100)" fill="#4caf50" />
+          <ellipse cx="100" cy="100" rx="80" ry="40" transform="rotate(-30 100 100)" fill="#4ea8de" />
         </svg>
         <svg className="cta-leaf" style={{ right: "-30px", bottom: "-30px", width: "250px", height: "250px" }} viewBox="0 0 200 200">
-          <ellipse cx="100" cy="100" rx="70" ry="35" transform="rotate(45 100 100)" fill="#4caf50" />
+          <ellipse cx="100" cy="100" rx="70" ry="35" transform="rotate(45 100 100)" fill="#4ea8de" />
         </svg>
 
         <div style={{ position: "relative", zIndex: 2 }}>
@@ -309,7 +352,9 @@ export default function HomePage() {
           <p>Join thousands of distributors and farmers who trust ADICON for quality agri-inputs delivered on time.</p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <button className="btn-primary" onClick={() => window.alert("Thank you! Our team will contact you shortly.")}>Request a Quote</button>
-            <button className="btn-outline">Download Catalogue</button>
+            <a className="btn-outline" href="/api/catalogue" target="_blank" rel="noopener noreferrer">
+              Download Catalogue
+            </a>
           </div>
           <div style={{ marginTop: "2.5rem", display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}>
             <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>📞 +91 98765 43210</div>
