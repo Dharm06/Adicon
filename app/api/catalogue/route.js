@@ -2,6 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 
 const CATALOGUE_NAME = "ADICON Broucher.pdf";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   const filePath = path.join(process.cwd(), CATALOGUE_NAME);
@@ -12,7 +14,7 @@ export async function GET() {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="${CATALOGUE_NAME}"`,
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "no-store",
       },
     });
   } catch {
