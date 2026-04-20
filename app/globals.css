@@ -82,12 +82,12 @@ nav {
   padding: 0.95rem 2.4rem;
   background: linear-gradient(
     90deg,
-    rgba(72, 126, 189, 0.78),
-    rgba(98, 154, 214, 0.75)
+    rgba(255, 255, 255, 0.96),
+    rgba(241, 249, 255, 0.94)
   );
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(184, 219, 252, 0.58);
-  box-shadow: 0 10px 24px rgba(25, 67, 113, 0.24);
+  border-bottom: 1px solid rgba(145, 185, 223, 0.42);
+  box-shadow: 0 8px 22px rgba(39, 86, 131, 0.14);
 }
 
 .logo {
@@ -136,12 +136,12 @@ nav {
   list-style: none;
   padding: 0.38rem 0.7rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(116, 165, 212, 0.12);
+  border: 1px solid rgba(116, 165, 212, 0.26);
 }
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.85);
+  color: #1f5489;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -154,8 +154,8 @@ nav {
 }
 
 .nav-links a:hover {
-  color: var(--gold);
-  background: rgba(244, 165, 0, 0.12);
+  color: #0f3f71;
+  background: rgba(116, 165, 212, 0.2);
 }
 
 .nav-cta {
@@ -187,7 +187,7 @@ nav {
   display: flex;
   align-items: center;
   padding: 8rem 3rem 4rem;
-  background: linear-gradient(135deg, #0c2a55 0%, #163e79 40%, #2d74b8 100%);
+  background: linear-gradient(135deg, #dff3ff 0%, #ccecff 45%, #b6e2ff 100%);
   overflow: hidden;
   z-index: 1;
 }
@@ -204,9 +204,9 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(244, 165, 0, 0.15);
-  border: 1px solid rgba(244, 165, 0, 0.4);
-  color: var(--gold-light);
+  background: rgba(31, 111, 178, 0.12);
+  border: 1px solid rgba(31, 111, 178, 0.32);
+  color: #195589;
   padding: 0.4rem 1rem;
   border-radius: 50px;
   font-size: 0.8rem;
@@ -220,18 +220,18 @@ nav {
   font-family: "Playfair Display", serif;
   font-size: clamp(3rem, 6vw, 4.8rem);
   font-weight: 900;
-  color: var(--white);
+  color: #153f68;
   line-height: 1.15;
   margin-bottom: 1.2rem;
 }
 
 .hero h1 span {
-  color: var(--gold);
+  color: #1f6fb2;
 }
 
 .hero p {
   font-size: 1.14rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(20, 63, 101, 0.82);
   line-height: 1.8;
   margin-bottom: 2rem;
   font-weight: 300;
@@ -272,21 +272,21 @@ nav {
 
 .btn-outline {
   background: transparent;
-  color: var(--white);
+  color: #1d5f97;
   padding: 0.85rem 2rem;
   border-radius: 50px;
   font-weight: 500;
   font-size: 0.95rem;
   cursor: pointer;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(29, 95, 151, 0.42);
   transition: all 0.3s;
   text-decoration: none;
   display: inline-block;
 }
 
 .btn-outline:hover {
-  border-color: var(--white);
-  background: rgba(255, 255, 255, 0.1);
+  border-color: #1d5f97;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .hero-visual {
