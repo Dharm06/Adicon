@@ -714,6 +714,40 @@ footer p {
   font-weight: 500;
 }
 
+.products-page .category-jump-actions {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.products-page .category-jump-btn {
+  padding: 0.68rem 1.15rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #0f3f6f;
+  background: linear-gradient(135deg, #fff7db, #ffe7a7);
+  border: 1px solid rgba(209, 152, 27, 0.24);
+  box-shadow:
+    0 8px 18px rgba(15, 63, 111, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.products-page .category-jump-btn:hover {
+  color: #0b2e52;
+  background: linear-gradient(135deg, #fff3c8, #ffd87d);
+  box-shadow:
+    0 12px 24px rgba(15, 63, 111, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.products-page .category-jump-btn:focus-visible {
+  outline: 2px solid #1f6fb2;
+  outline-offset: 2px;
+}
+
 .product-gallery-card {
   background: var(--white);
   border: 1px solid #edf3ed;
@@ -740,6 +774,7 @@ footer p {
 .product-gallery-image-link {
   display: block;
   text-decoration: none;
+  color: inherit;
 }
 
 .product-gallery-image-link:focus-visible {
@@ -749,6 +784,18 @@ footer p {
 
 .product-gallery-image {
   object-fit: cover;
+}
+
+.product-gallery-meta {
+  padding: 0.85rem 0.95rem 1rem;
+}
+
+.product-gallery-meta h3 {
+  margin: 0;
+  color: #1d3122;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 600;
 }
 
 .product-gallery-empty {
@@ -903,6 +950,14 @@ footer p {
   .product-category-head p {
     font-size: 0.84rem;
   }
+  .products-page .category-jump-actions {
+    gap: 0.55rem;
+  }
+  .products-page .category-jump-btn {
+    width: auto;
+    padding: 0.62rem 0.95rem;
+    font-size: 0.78rem;
+  }
   .adicon-loader-text {
     letter-spacing: 0.16em;
   }
@@ -985,6 +1040,14 @@ footer p {
   }
   .product-gallery-grid {
     grid-template-columns: 1fr;
+  }
+  .products-page .category-jump-actions {
+    gap: 0.5rem;
+  }
+  .products-page .category-jump-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
   }
   .adicon-loader-mark {
     width: 64px;

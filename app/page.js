@@ -51,6 +51,9 @@ export default function HomePage() {
   const cropRowRef = useRef(null);
   const wheatFieldRef = useRef(null);
   const statsBarRef = useRef(null);
+  const whatsappQuoteLink = `https://wa.me/919408894456?text=${encodeURIComponent(
+    "Hello ADICON team, I would like to get a quote for your products.",
+  )}`;
   const statsAnimatedRef = useRef(false);
   const [statValues, setStatValues] = useState(STAT_ITEMS.map(() => 0));
 
@@ -77,7 +80,8 @@ export default function HomePage() {
       leafBg.appendChild(div);
     }
 
-    particleContainer.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;";
+    particleContainer.style.cssText =
+      "position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;";
     for (let i = 0; i < 15; i += 1) {
       const p = document.createElement("div");
       p.className = "particle";
@@ -94,7 +98,20 @@ export default function HomePage() {
       particleContainer.appendChild(p);
     }
 
-    const types = ["wheat", "plant", "wheat", "plant", "wheat", "plant", "wheat", "plant", "wheat", "plant", "wheat", "plant"];
+    const types = [
+      "wheat",
+      "plant",
+      "wheat",
+      "plant",
+      "wheat",
+      "plant",
+      "wheat",
+      "plant",
+      "wheat",
+      "plant",
+      "wheat",
+      "plant",
+    ];
     types.forEach((t, i) => {
       const div = document.createElement("div");
       div.className = "crop-plant";
@@ -153,7 +170,9 @@ export default function HomePage() {
 
       const step = (now) => {
         const progress = Math.min((now - start) / duration, 1);
-        setStatValues(STAT_ITEMS.map((item) => Math.round(item.end * progress)));
+        setStatValues(
+          STAT_ITEMS.map((item) => Math.round(item.end * progress)),
+        );
 
         if (progress < 1) frameId = requestAnimationFrame(step);
       };
@@ -198,12 +217,27 @@ export default function HomePage() {
           />
         </Link>
         <ul className="nav-links">
-          <li><a href="#products">Products</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#why">Why Us</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#products">Products</a>
+          </li>
+          <li>
+            <a href="#about">About</a>
+          </li>
+          <li>
+            <a href="#why">Why Us</a>
+          </li>
+          <li>
+            <a href="#contact">Contact</a>
+          </li>
         </ul>
-        <a href="#contact" className="nav-cta">Get a Quote</a>
+        <a
+          href={whatsappQuoteLink}
+          className="nav-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get a Quote
+        </a>
       </nav>
 
       <section className="hero">
@@ -216,11 +250,21 @@ export default function HomePage() {
             </svg>
             Manufacturer &amp; Wholesaler Since 2001
           </div>
-          <h1>Growing a <span>Greener</span> Future for Every Farmer</h1>
-          <p>ADICON delivers science-backed pesticides, herbicides, fungicides, micro-nutrients, bio-pesticides &amp; plant growth regulators — empowering farmers to maximise every harvest.</p>
+          <h1>
+            Growing a <span>Greener</span> Future for Every Farmer
+          </h1>
+          <p>
+            ADICON delivers science-backed pesticides, herbicides, fungicides,
+            micro-nutrients, bio-pesticides &amp; plant growth regulators —
+            empowering farmers to maximise every harvest.
+          </p>
           <div className="hero-btns">
-            <Link href="/products" className="btn-primary">Explore Products</Link>
-            <a href="#contact" className="btn-outline">Contact Us</a>
+            <Link href="/products" className="btn-primary">
+              Explore Products
+            </Link>
+            <a href="#contact" className="btn-outline">
+              Contact Us
+            </a>
           </div>
         </div>
         <div className="crop-row" id="cropRow" ref={cropRowRef} />
@@ -233,7 +277,9 @@ export default function HomePage() {
               <div className="stat-number">{`${statValues[index]}${item.suffix}`}</div>
               <div className="stat-label">{item.label}</div>
             </div>
-            {index < STAT_ITEMS.length - 1 ? <div className="stat-divider" /> : null}
+            {index < STAT_ITEMS.length - 1 ? (
+              <div className="stat-divider" />
+            ) : null}
           </Fragment>
         ))}
       </div>
@@ -241,58 +287,127 @@ export default function HomePage() {
       <section className="section" id="products">
         <div className="section-header reveal">
           <div className="section-tag">Our Portfolio</div>
-          <h2 className="section-title">Complete <span>Agri-Input</span> Solutions</h2>
-          <p className="section-subtitle">From soil to shelf — every product crafted with precision for maximum crop yield and safety.</p>
+          <h2 className="section-title">
+            Complete <span>Agri-Input</span> Solutions
+          </h2>
+          <p className="section-subtitle">
+            From soil to shelf — every product crafted with precision for
+            maximum crop yield and safety.
+          </p>
         </div>
 
         <div className="products-grid">
           <div className="product-card reveal">
-            <div className="product-icon" style={{ background: "#e8f4ff" }}>🌿</div>
+            <div className="product-icon" style={{ background: "#e8f4ff" }}>
+              🌿
+            </div>
             <h3>Pesticides</h3>
-            <p>Advanced formulations to protect crops from a wide spectrum of insects and pests, ensuring healthy plant development.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Advanced formulations to protect crops from a wide spectrum of
+              insects and pests, ensuring healthy plant development.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
-          <div className="product-card reveal" style={{ animationDelay: "0.1s" }}>
-            <div className="product-icon" style={{ background: "#fff8e1" }}>🌾</div>
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <div className="product-icon" style={{ background: "#fff8e1" }}>
+              🌾
+            </div>
             <h3>Herbicides</h3>
-            <p>Selective and non-selective weed control solutions that safeguard crops while eliminating unwanted competition.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Selective and non-selective weed control solutions that safeguard
+              crops while eliminating unwanted competition.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
-          <div className="product-card reveal" style={{ animationDelay: "0.2s" }}>
-            <div className="product-icon" style={{ background: "#e3f2fd" }}>🍄</div>
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <div className="product-icon" style={{ background: "#e3f2fd" }}>
+              🍄
+            </div>
             <h3>Fungicides</h3>
-            <p>Protective and curative fungicide blends to combat plant diseases at the source and prevent yield loss.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Protective and curative fungicide blends to combat plant diseases
+              at the source and prevent yield loss.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
-          <div className="product-card reveal" style={{ animationDelay: "0.3s" }}>
-            <div className="product-icon" style={{ background: "#fce4ec" }}>💧</div>
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <div className="product-icon" style={{ background: "#fce4ec" }}>
+              💧
+            </div>
             <h3>Micro-Nutrient Fertilisers</h3>
-            <p>Balanced mix-micro nutrient blends that address soil deficiencies and unlock a plant's full genetic potential.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Balanced mix-micro nutrient blends that address soil deficiencies
+              and unlock a plant's full genetic potential.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
-          <div className="product-card reveal" style={{ animationDelay: "0.4s" }}>
-            <div className="product-icon" style={{ background: "#f3e5f5" }}>🌱</div>
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <div className="product-icon" style={{ background: "#f3e5f5" }}>
+              🌱
+            </div>
             <h3>Bio-Pesticides</h3>
-            <p>Eco-friendly biological pest management derived from natural organisms — safe for soil, crops, and the environment.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Eco-friendly biological pest management derived from natural
+              organisms — safe for soil, crops, and the environment.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
-          <div className="product-card reveal" style={{ animationDelay: "0.5s" }}>
-            <div className="product-icon" style={{ background: "#e0f7fa" }}>🌻</div>
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.5s" }}
+          >
+            <div className="product-icon" style={{ background: "#e0f7fa" }}>
+              🌻
+            </div>
             <h3>Plant Growth Regulators</h3>
-            <p>Hormone-based solutions to accelerate root development, improve flowering, and enhance overall plant vigour.</p>
-            <a className="learn-more" href="#">Discover Range →</a>
+            <p>
+              Hormone-based solutions to accelerate root development, improve
+              flowering, and enhance overall plant vigour.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
           </div>
         </div>
         <div className="section-actions reveal">
-          <Link href="/products" className="btn-primary">Show Products</Link>
+          <Link href="/products" className="btn-primary">
+            Show Products
+          </Link>
         </div>
       </section>
 
       <div className="wheat-section" id="about">
         <div className="section-header reveal">
           <div className="section-tag">Our Roots</div>
-          <h2 className="section-title">Rooted in <span>Agriculture,</span> Growing with India</h2>
-          <p className="section-subtitle">Over two decades of trusted partnership with farmers across the nation — because every field deserves the best care.</p>
+          <h2 className="section-title">
+            Rooted in <span>Agriculture,</span> Growing with India
+          </h2>
+          <p className="section-subtitle">
+            Over two decades of trusted partnership with farmers across the
+            nation — because every field deserves the best care.
+          </p>
         </div>
 
         <div className="wheat-field" id="wheatField" ref={wheatFieldRef} />
@@ -301,70 +416,193 @@ export default function HomePage() {
       <section className="section" id="why" style={{ background: "#fff" }}>
         <div className="section-header reveal">
           <div className="section-tag">Why Choose Us</div>
-          <h2 className="section-title">The <span>ADICON</span> Advantage</h2>
+          <h2 className="section-title">
+            The <span>ADICON</span> Advantage
+          </h2>
         </div>
 
         <div className="features-grid">
           <div className="feature-item reveal">
             <span className="feature-icon">🔬</span>
             <h4>R&amp;D Backed Formulas</h4>
-            <p>Every product goes through rigorous field testing and laboratory validation before reaching your crop.</p>
+            <p>
+              Every product goes through rigorous field testing and laboratory
+              validation before reaching your crop.
+            </p>
           </div>
-          <div className="feature-item reveal" style={{ transitionDelay: "0.1s" }}>
+          <div
+            className="feature-item reveal"
+            style={{ transitionDelay: "0.1s" }}
+          >
             <span className="feature-icon">🏭</span>
             <h4>Direct Manufacturer</h4>
-            <p>We produce what we sell — ensuring quality control at every stage and competitive wholesale pricing.</p>
+            <p>
+              We produce what we sell — ensuring quality control at every stage
+              and competitive wholesale pricing.
+            </p>
           </div>
-          <div className="feature-item reveal" style={{ transitionDelay: "0.2s" }}>
+          <div
+            className="feature-item reveal"
+            style={{ transitionDelay: "0.2s" }}
+          >
             <span className="feature-icon">🌍</span>
             <h4>Pan-India Distribution</h4>
-            <p>A wide distribution network ensures timely availability across 18+ states, right at the farm gate.</p>
+            <p>
+              A wide distribution network ensures timely availability across 18+
+              states, right at the farm gate.
+            </p>
           </div>
-          <div className="feature-item reveal" style={{ transitionDelay: "0.3s" }}>
+          <div
+            className="feature-item reveal"
+            style={{ transitionDelay: "0.3s" }}
+          >
             <span className="feature-icon">♻️</span>
             <h4>Eco-Conscious Products</h4>
-            <p>Our bio-pesticide range minimises chemical load on soil and water, supporting sustainable farming.</p>
+            <p>
+              Our bio-pesticide range minimises chemical load on soil and water,
+              supporting sustainable farming.
+            </p>
           </div>
-          <div className="feature-item reveal" style={{ transitionDelay: "0.4s" }}>
+          <div
+            className="feature-item reveal"
+            style={{ transitionDelay: "0.4s" }}
+          >
             <span className="feature-icon">🤝</span>
             <h4>Expert Agronomist Support</h4>
-            <p>Our on-ground agronomy team offers personalised guidance to help farmers achieve maximum yield.</p>
+            <p>
+              Our on-ground agronomy team offers personalised guidance to help
+              farmers achieve maximum yield.
+            </p>
           </div>
-          <div className="feature-item reveal" style={{ transitionDelay: "0.5s" }}>
+          <div
+            className="feature-item reveal"
+            style={{ transitionDelay: "0.5s" }}
+          >
             <span className="feature-icon">📜</span>
             <h4>Certified &amp; Compliant</h4>
-            <p>All products comply with CIB&amp;RC regulations and carry proper registration certification.</p>
+            <p>
+              All products comply with CIB&amp;RC regulations and carry proper
+              registration certification.
+            </p>
           </div>
         </div>
       </section>
 
       <section className="cta-banner" id="contact">
-        <svg className="cta-leaf" style={{ left: "-50px", top: "-50px", width: "300px", height: "300px" }} viewBox="0 0 200 200">
-          <ellipse cx="100" cy="100" rx="80" ry="40" transform="rotate(-30 100 100)" fill="#4ea8de" />
+        <svg
+          className="cta-leaf"
+          style={{
+            left: "-50px",
+            top: "-50px",
+            width: "300px",
+            height: "300px",
+          }}
+          viewBox="0 0 200 200"
+        >
+          <ellipse
+            cx="100"
+            cy="100"
+            rx="80"
+            ry="40"
+            transform="rotate(-30 100 100)"
+            fill="#4ea8de"
+          />
         </svg>
-        <svg className="cta-leaf" style={{ right: "-30px", bottom: "-30px", width: "250px", height: "250px" }} viewBox="0 0 200 200">
-          <ellipse cx="100" cy="100" rx="70" ry="35" transform="rotate(45 100 100)" fill="#4ea8de" />
+        <svg
+          className="cta-leaf"
+          style={{
+            right: "-30px",
+            bottom: "-30px",
+            width: "250px",
+            height: "250px",
+          }}
+          viewBox="0 0 200 200"
+        >
+          <ellipse
+            cx="100"
+            cy="100"
+            rx="70"
+            ry="35"
+            transform="rotate(45 100 100)"
+            fill="#4ea8de"
+          />
         </svg>
 
         <div style={{ position: "relative", zIndex: 2 }}>
-          <div className="section-tag" style={{ background: "rgba(244,165,0,0.2)", color: "#ffd54f" }}>Partner With Us</div>
-          <h2 style={{ marginTop: "0.8rem" }}>Ready to <span>Cultivate</span> Success?</h2>
-          <p>Join thousands of distributors and farmers who trust ADICON for quality agri-inputs delivered on time.</p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <button className="btn-primary" onClick={() => window.alert("Thank you! Our team will contact you shortly.")}>Request a Quote</button>
+          <div
+            className="section-tag"
+            style={{ background: "rgba(244,165,0,0.2)", color: "#ffd54f" }}
+          >
+            Partner With Us
           </div>
-          <div style={{ marginTop: "2.5rem", display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>📞 +91 98765 43210</div>
-            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>✉️ info@adicon.in</div>
-            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>📍 Rajkot, Gujarat, India</div>
+          <h2 style={{ marginTop: "0.8rem" }}>
+            Ready to <span>Cultivate</span> Success?
+          </h2>
+          <p>
+            Join thousands of distributors and farmers who trust ADICON for
+            quality agri-inputs delivered on time.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "1rem",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <a
+              className="btn-primary"
+              href={whatsappQuoteLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request a Quote
+            </a>
+          </div>
+          <div
+            style={{
+              marginTop: "2.5rem",
+              display: "flex",
+              gap: "2rem",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
+              📞 +91 94088 94456
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
+              ✉️ Adiconpesticidespvtltd@gmail.com
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
+              📍 Regd. Office: Shed No. 17/a, Kalpataru Mill Compound, Village:
+              Karoli, Ta. Kalol, Dist. Gandhinagar - 382721
+            </div>
           </div>
         </div>
       </section>
 
       <footer>
-        <div className="logo" style={{ fontSize: "1.3rem" }}>ADICON</div>
-        <p>© 2025 ADICON Agri Solutions. Manufacturer &amp; Wholesaler of Premium Agri-Inputs.</p>
-        <p style={{ fontSize: "0.78rem" }}>Pesticides · Herbicides · Fungicides · Fertilisers · Bio-Pesticides · PGR</p>
+        <div className="logo" style={{ fontSize: "1.3rem" }}>
+          ADICON
+        </div>
+        <p>
+          © 2025 ADICON Agri Solutions. Manufacturer &amp; Wholesaler of Premium
+          Agri-Inputs.
+        </p>
+        <p style={{ fontSize: "0.78rem" }}>
+          Pesticides · Herbicides · Fungicides · Fertilisers · Bio-Pesticides ·
+          PGR
+        </p>
+        <p style={{ fontSize: "0.82rem" }}>
+          📞{" "}
+          <a
+            href="tel:9408894456"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            9408894456
+          </a>
+        </p>
       </footer>
     </>
   );

@@ -27,138 +27,35 @@ function formatCategoryName(value) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-const CATEGORY_PROFILES = {
-  Pesticides: [
-    "pesticide",
-    "insecticide",
-    "pest",
-    "insects",
-    "thrips",
-    "mite",
-    "aphid",
-    "larva",
-    "worm",
-    "whitefly",
-    "termite",
-    "bollworm",
-    "stem borer",
-    "caterpillar",
-  ],
-  Herbicides: [
-    "herbicide",
-    "weedicide",
-    "weed",
-    "weedicides",
-    "glyphosate",
-    "pre-emergence",
-    "post-emergence",
-    "broadleaf",
-    "grassy weed",
-    "weed control",
-  ],
-  Fungicides: [
-    "fungicide",
-    "fungal",
-    "mildew",
-    "blight",
-    "anthracnose",
-    "rust",
-    "rot",
-    "damping off",
-    "powdery mildew",
-    "downy mildew",
-    "leaf spot",
-  ],
-  "Micro-Nutrient Fertilisers": [
-    "micronutrient",
-    "micro nutrient",
-    "zinc",
-    "boron",
-    "iron",
-    "manganese",
-    "chelated",
-    "fertilizer",
-    "fertiliser",
-    "deficiency",
-    "edta",
-    "foliar feed",
-  ],
-  "Bio-Pesticides": [
-    "bio pesticide",
-    "biopesticide",
-    "bio",
-    "organic",
-    "neem",
-    "trichoderma",
-    "bacillus",
-    "beauveria",
-    "metarhizium",
-    "natural",
-    "eco friendly",
-  ],
-  "Plant Growth Regulators": [
-    "pgr",
-    "plant growth regulator",
-    "growth regulator",
-    "gibberellic",
-    "auxin",
-    "cytokinin",
-    "flowering",
-    "fruit set",
-    "rooting",
-    "hormone",
-  ],
-};
-
-function normalizeText(text) {
-  return text
+function toCategoryAnchorId(category, index) {
+  const slug = category
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return `category-${index + 1}-${slug || "section"}`;
+}
+
+function extractCategoryFromPath(imageAbsPath, imagesRoot) {
+  const relativePath = path.relative(imagesRoot, imageAbsPath);
+  const segments = relativePath.split(path.sep).filter(Boolean);
+  return segments.length > 1
+    ? formatCategoryName(segments[0])
+    : "Uncategorized";
+}
+
+function extractProductTitle(imageAbsPath) {
+  return path
+    .basename(imageAbsPath, path.extname(imageAbsPath))
+    .replace(/[_]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function scoreTextAgainstProfile(normalizedText, keywords) {
-  let score = 0;
-  for (const keyword of keywords) {
-    const normalizedKeyword = normalizeText(keyword);
-    if (!normalizedKeyword) continue;
-
-    if (normalizedText.includes(normalizedKeyword)) score += 2;
-    const parts = normalizedKeyword.split(" ").filter(Boolean);
-    if (
-      parts.length > 1 &&
-      parts.every((part) => normalizedText.includes(part))
-    ) {
-      score += 1;
-    }
-  }
-  return score;
-}
-
-function classifyText(text) {
-  const normalized = normalizeText(text || "");
-  let bestCategory = "Uncategorized";
-  let bestScore = 0;
-
-  for (const [category, keywords] of Object.entries(CATEGORY_PROFILES)) {
-    const score = scoreTextAgainstProfile(normalized, keywords);
-    if (score > bestScore) {
-      bestScore = score;
-      bestCategory = category;
-    }
-  }
-
-  return bestScore > 0 ? bestCategory : "Uncategorized";
-}
-
-async function classifyImagesBySimilarity(imagePathsAbs) {
-  return imagePathsAbs.map((imageAbsPath) => ({
-    imageAbsPath,
-    category: classifyText(
-      path.basename(imageAbsPath, path.extname(imageAbsPath)),
-    ),
-  }));
+function encodePublicPath(publicPath) {
+  return publicPath
+    .split("/")
+    .map((segment) => (segment ? encodeURIComponent(segment) : ""))
+    .join("/");
 }
 
 function toPublicImageSrc(imageAbsPath, publicRoot) {
@@ -168,15 +65,15 @@ function toPublicImageSrc(imageAbsPath, publicRoot) {
     imageAbsPath.startsWith(publicRoot)
   ) {
     const relative = path.relative(publicRoot, imageAbsPath);
-    return `/${relative.replace(/\\/g, "/")}`;
+    return encodePublicPath(`/${relative.replace(/\\/g, "/")}`);
   }
   const normalized = imageAbsPath.replace(/\\/g, "/");
   const marker = "/public/";
   const idx = normalized.indexOf(marker);
   if (idx >= 0) {
-    return `/${normalized.slice(idx + marker.length)}`;
+    return encodePublicPath(`/${normalized.slice(idx + marker.length)}`);
   }
-  return normalized.startsWith("/") ? normalized : `/${normalized}`;
+  return encodePublicPath(normalized.startsWith("/") ? normalized : `/${normalized}`);
 }
 
 export default async function ProductsPage() {
@@ -208,16 +105,12 @@ export default async function ProductsPage() {
         )
     : [];
 
-  const classified =
-    productImages.length > 0
-      ? await classifyImagesBySimilarity(productImages)
-      : [];
-
-  const groupedProducts = classified.reduce((acc, item) => {
-    const category = formatCategoryName(item.category);
-    const src = toPublicImageSrc(item.imageAbsPath, publicRoot);
+  const groupedProducts = productImages.reduce((acc, imageAbsPath) => {
+    const category = extractCategoryFromPath(imageAbsPath, imagesRoot);
+    const src = toPublicImageSrc(imageAbsPath, publicRoot);
+    const name = extractProductTitle(imageAbsPath);
     if (!acc[category]) acc[category] = [];
-    acc[category].push(src);
+    acc[category].push({ src, name });
     return acc;
   }, {});
 
@@ -229,9 +122,22 @@ export default async function ProductsPage() {
     })
     .filter((category) => category !== "Uncategorized");
 
+  Object.values(groupedProducts).forEach((items) => {
+    items.sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+    );
+  });
+
   const uncategorizedImages = groupedProducts.Uncategorized ?? [];
   const shouldShowUngroupedGrid =
     categories.length === 0 && uncategorizedImages.length > 0;
+  const categoryAnchors = categories.map((category, index) => ({
+    category,
+    id: toCategoryAnchorId(category, index),
+  }));
 
   return (
     <>
@@ -269,39 +175,62 @@ export default async function ProductsPage() {
             Explore ADICON product images grouped with similarity
             classification.
           </p>
+          {categoryAnchors.length > 0 ? (
+            <div className="section-actions category-jump-actions">
+              {categoryAnchors.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className="btn-primary category-jump-btn"
+                >
+                  {item.category}
+                </a>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         {categories.length > 0 || shouldShowUngroupedGrid ? (
-          <div className="product-categories-wrap">
-            {categories.map((category) => (
-              <section className="product-category-block" key={category}>
+          <div className="product-categories-wrap" id="product-categories">
+            {categoryAnchors.map((item) => (
+              <section
+                className="product-category-block"
+                key={item.category}
+                id={item.id}
+              >
                 <div className="product-category-head">
                   <div className="section-tag product-category-tag">
-                    {category}
+                    {item.category}
                   </div>
                 </div>
                 <div className="product-gallery-grid">
-                  {groupedProducts[category].map((src, idx) => (
+                  {groupedProducts[item.category].map((product, idx) => (
                     <article
                       className="product-gallery-card reveal visible"
-                      key={src}
+                      key={product.src}
                     >
                       <a
-                        href={src}
+                        href={product.src}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="product-gallery-image-link"
-                        aria-label={`Open ADICON Product ${idx + 1}`}
+                        aria-label={`Open ${product.name}`}
                       >
                         <div className="product-gallery-image-wrap">
                           <Image
-                            src={src}
-                            alt={`ADICON Product ${idx + 1}`}
+                            src={product.src}
+                            alt={product.name}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="product-gallery-image"
                             priority={idx < 8}
+                            unoptimized={product.src
+                              .toLowerCase()
+                              .endsWith(".svg")}
                           />
+                        </div>
+                        <div className="product-gallery-meta">
+                          <h3>{product.name}</h3>
                         </div>
                       </a>
                     </article>
@@ -312,27 +241,33 @@ export default async function ProductsPage() {
             {shouldShowUngroupedGrid ? (
               <section className="product-category-block">
                 <div className="product-gallery-grid">
-                  {uncategorizedImages.map((src, idx) => (
+                  {uncategorizedImages.map((product, idx) => (
                     <article
                       className="product-gallery-card reveal visible"
-                      key={src}
+                      key={product.src}
                     >
                       <a
-                        href={src}
+                        href={product.src}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="product-gallery-image-link"
-                        aria-label={`Open ADICON Product ${idx + 1}`}
+                        aria-label={`Open ${product.name}`}
                       >
                         <div className="product-gallery-image-wrap">
                           <Image
-                            src={src}
-                            alt={`ADICON Product ${idx + 1}`}
+                            src={product.src}
+                            alt={product.name}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="product-gallery-image"
                             priority={idx < 8}
+                            unoptimized={product.src
+                              .toLowerCase()
+                              .endsWith(".svg")}
                           />
+                        </div>
+                        <div className="product-gallery-meta">
+                          <h3>{product.name}</h3>
                         </div>
                       </a>
                     </article>
