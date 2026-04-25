@@ -342,38 +342,7 @@ export default function HomePage() {
               Discover Range →
             </Link>
           </div>
-          <div
-            className="product-card reveal"
-            style={{ animationDelay: "0.3s" }}
-          >
-            <div className="product-icon" style={{ background: "#fce4ec" }}>
-              💧
-            </div>
-            <h3>Micro-Nutrient Fertilisers</h3>
-            <p>
-              Balanced mix-micro nutrient blends that address soil deficiencies
-              and unlock a plant's full genetic potential.
-            </p>
-            <Link className="learn-more" href="/products">
-              Discover Range →
-            </Link>
-          </div>
-          <div
-            className="product-card reveal"
-            style={{ animationDelay: "0.4s" }}
-          >
-            <div className="product-icon" style={{ background: "#f3e5f5" }}>
-              🌱
-            </div>
-            <h3>Bio-Pesticides</h3>
-            <p>
-              Eco-friendly biological pest management derived from natural
-              organisms — safe for soil, crops, and the environment.
-            </p>
-            <Link className="learn-more" href="/products">
-              Discover Range →
-            </Link>
-          </div>
+
           <div
             className="product-card reveal"
             style={{ animationDelay: "0.5s" }}
