@@ -301,7 +301,7 @@ export default function HomePage() {
             <div className="product-icon" style={{ background: "#e8f4ff" }}>
               🌿
             </div>
-            <h3>Pesticides</h3>
+            <h3>Insecticides</h3>
             <p>
               Advanced formulations to protect crops from a wide spectrum of
               insects and pests, ensuring healthy plant development.
@@ -345,7 +345,24 @@ export default function HomePage() {
 
           <div
             className="product-card reveal"
-            style={{ animationDelay: "0.5s" }}
+            style={{ animationDelay: "0.3s" }}
+          >
+            <div className="product-icon" style={{ background: "#f1f8e9" }}>
+              🧪
+            </div>
+            <h3>Fertilisers</h3>
+            <p>
+              Balanced nutrient formulations that enrich soil health, strengthen
+              crop growth, and improve overall productivity across seasons.
+            </p>
+            <Link className="learn-more" href="/products">
+              Discover Range →
+            </Link>
+          </div>
+
+          <div
+            className="product-card reveal"
+            style={{ animationDelay: "0.4s" }}
           >
             <div className="product-icon" style={{ background: "#e0f7fa" }}>
               🌻

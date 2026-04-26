@@ -35,6 +35,54 @@ function toCategoryAnchorId(category, index) {
   return `category-${index + 1}-${slug || "section"}`;
 }
 
+const CATEGORY_BUTTON_ORDER = [
+  {
+    aliases: ["insecticides", "insectisides", "insecticide", "pesticides"],
+    buttonLabel: "Insecticides",
+  },
+  { aliases: ["fungicides", "fungicide"], buttonLabel: "Fungicides" },
+  { aliases: ["herbicides", "herbicide"], buttonLabel: "Herbicides" },
+  {
+    aliases: ["plantgrowthregulators", "plantgrowthregulator", "pgr", "pgrs"],
+    buttonLabel: "Plant Growth Regulators",
+  },
+  {
+    aliases: ["fertilisers", "fertilizers", "fertiliser", "fertilizer"],
+    buttonLabel: "Fertilisers",
+  },
+];
+
+function normalizeCategoryName(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function buildCategoryAnchors(categories) {
+  const remainingCategories = [...categories];
+  const orderedButtons = [];
+
+  CATEGORY_BUTTON_ORDER.forEach((orderItem) => {
+    const matchIndex = remainingCategories.findIndex((category) => {
+      const normalized = normalizeCategoryName(category);
+      return orderItem.aliases.some(
+        (alias) => normalized === normalizeCategoryName(alias),
+      );
+    });
+    if (matchIndex >= 0) {
+      const [category] = remainingCategories.splice(matchIndex, 1);
+      orderedButtons.push({ category, buttonLabel: orderItem.buttonLabel });
+    }
+  });
+
+  remainingCategories.forEach((category) => {
+    orderedButtons.push({ category, buttonLabel: category });
+  });
+
+  return orderedButtons.map((item, index) => ({
+    ...item,
+    id: toCategoryAnchorId(item.category, index),
+  }));
+}
+
 function extractCategoryFromPath(imageAbsPath, imagesRoot) {
   const relativePath = path.relative(imagesRoot, imageAbsPath);
   const segments = relativePath.split(path.sep).filter(Boolean);
@@ -134,10 +182,7 @@ export default async function ProductsPage() {
   const uncategorizedImages = groupedProducts.Uncategorized ?? [];
   const shouldShowUngroupedGrid =
     categories.length === 0 && uncategorizedImages.length > 0;
-  const categoryAnchors = categories.map((category, index) => ({
-    category,
-    id: toCategoryAnchorId(category, index),
-  }));
+  const categoryAnchors = buildCategoryAnchors(categories);
 
   return (
     <>
@@ -183,7 +228,7 @@ export default async function ProductsPage() {
                   href={`#${item.id}`}
                   className="btn-primary category-jump-btn"
                 >
-                  {item.category}
+                  {item.buttonLabel}
                 </a>
               ))}
             </div>
