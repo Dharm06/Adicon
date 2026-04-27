@@ -569,9 +569,15 @@ export default function HomePage() {
       </section>
 
       <footer>
-        <div className="logo" style={{ fontSize: "1.3rem" }}>
-          ADICON
-        </div>
+        <Link href="/" className="footer-logo-link" aria-label="ADICON home">
+          <Image
+            src="/logofinal.png"
+            alt="Adicon Logo"
+            width={180}
+            height={58}
+            className="footer-logo-img"
+          />
+        </Link>
         <p>
           © 2025 ADICON Agri Solutions. Manufacturer &amp; Wholesaler of Premium
           Agri-Inputs.

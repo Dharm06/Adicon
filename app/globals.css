@@ -653,6 +653,23 @@ footer {
 footer .logo {
   font-size: 1.4rem;
 }
+
+.footer-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.footer-logo-img {
+  width: auto;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+}
+
 footer p {
   font-size: 0.82rem;
 }
@@ -991,6 +1008,9 @@ footer p {
   }
   .nav-logo-img {
     height: 3.9rem;
+  }
+  .footer-logo-img {
+    height: 48px;
   }
   .nav-cta {
     padding: 0.42rem 0.9rem;
