@@ -32,6 +32,26 @@ body {
   overflow-x: hidden;
 }
 
+.project-credit {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0.9rem 1rem 1.15rem;
+  background: #081f3f;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+}
+
+.project-credit a {
+  color: #ffd54f;
+  text-decoration: none;
+}
+
+.project-credit a:hover {
+  text-decoration: underline;
+}
+
 .leaf-bg {
   position: fixed;
   top: 0;
@@ -1018,6 +1038,10 @@ footer p {
   }
   .hero {
     padding: 6.2rem 1rem 2.6rem;
+  }
+  .project-credit {
+    font-size: 0.76rem;
+    padding: 0.8rem 0.9rem 1rem;
   }
   .hero h1 {
     font-size: clamp(2.25rem, 9vw, 2.85rem);

@@ -16,6 +16,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning>
         {children}
+        <div className="project-credit">
+          _ - Developed with Love by EthosGrowth |{" "}
+          <a
+            href="https://ethosgrowth.me"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ethosgrowth.me
+          </a>
+        </div>
         <Analytics />
       </body>
     </html>
