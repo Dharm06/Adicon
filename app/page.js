@@ -100,7 +100,7 @@ const TEAM_MEMBERS = [
       "Leads strategic growth with high-quality pesticides, herbicides, fungicides, insecticides, and plant growth solutions.",
   },
   {
-    name: "Deep Kaladiya",
+    name: "Deep Kakadiya",
     role: "Production Head",
     experience: "Agrochemical Production Expert",
     photo: "/Team Adicon/Deep Kakadiya.jpeg",
@@ -112,6 +112,7 @@ const TEAM_MEMBERS = [
     name: "Rasikbhai H. Patoliya",
     role: "Chief Technical Officer (CTO)",
     experience: "35+ Years Experience",
+    photo: "/Team Adicon/Rasik bhai.jpeg",
     bio: "Veteran technical leader with deep expertise in formulation technology, product development, and industrial operations.",
     focus:
       "Guides research-led innovation, compliance, and technology adoption to maintain superior product performance.",
@@ -128,7 +129,7 @@ const TEAM_MEMBERS = [
     name: "Yash Gondaliya",
     role: "Accounts Head",
     experience: "12+ Years Experience",
-    photo: "/Team Adicon/Yash Gondaliya.jpeg",
+    photo: "/Team Adicon/Yash Gondaliya.jpeg?v=2",
     bio: "Finance professional managing accounting, taxation, audits, and financial controls with precision and transparency.",
     focus:
       "Ensures strong budgeting, compliance, and reporting systems that support disciplined and stable business growth.",
@@ -137,6 +138,7 @@ const TEAM_MEMBERS = [
     name: "Nileshbhai Hirapara",
     role: "HR Head",
     experience: "18+ Years Experience",
+    photo: "/Team Adicon/nileshbhai hirapara.png",
     bio: "People-centric HR leader focused on workforce development, engagement, and organizational discipline.",
     focus:
       "Builds a productive culture through talent management, employee welfare, policy implementation, and team alignment.",
@@ -669,7 +671,11 @@ export default function HomePage() {
                     src={member.photo}
                     alt={member.name}
                     fill
-                    className="team-card-photo"
+                    className={`team-card-photo${
+                      member.photoFit === "contain"
+                        ? " team-card-photo-contain"
+                        : ""
+                    }`}
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
                 ) : (
