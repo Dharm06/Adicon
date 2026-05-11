@@ -94,6 +94,7 @@ const TEAM_MEMBERS = [
     name: "Dhruv Patoliya",
     role: "Managing Director & CEO",
     experience: "B.Sc. (Hons.) Agriculture",
+    photo: "/Team Adicon/Dhruv Patoliya.jpeg",
     bio: "Young and visionary agri entrepreneur focused on modern crop protection, farmer needs, and innovation-led growth.",
     focus:
       "Leads strategic growth with high-quality pesticides, herbicides, fungicides, insecticides, and plant growth solutions.",
@@ -102,6 +103,7 @@ const TEAM_MEMBERS = [
     name: "Deep Kaladiya",
     role: "Production Head",
     experience: "Agrochemical Production Expert",
+    photo: "/Team Adicon/Deep Kakadiya.jpeg",
     bio: "Drives manufacturing excellence across formulation, process control, quality, and operational efficiency.",
     focus:
       "Strengthens productivity through advanced techniques, process optimization, and strict quality assurance systems.",
@@ -126,6 +128,7 @@ const TEAM_MEMBERS = [
     name: "Yash Gondaliya",
     role: "Accounts Head",
     experience: "12+ Years Experience",
+    photo: "/Team Adicon/Yash Gondaliya.jpeg",
     bio: "Finance professional managing accounting, taxation, audits, and financial controls with precision and transparency.",
     focus:
       "Ensures strong budgeting, compliance, and reporting systems that support disciplined and stable business growth.",
@@ -139,6 +142,15 @@ const TEAM_MEMBERS = [
       "Builds a productive culture through talent management, employee welfare, policy implementation, and team alignment.",
   },
 ];
+
+function getMemberInitials(name) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("");
+}
 
 export default function HomePage() {
   const leafBgRef = useRef(null);
@@ -651,6 +663,21 @@ export default function HomePage() {
               className="team-card reveal"
               style={{ transitionDelay: `${Math.min(index * 0.06, 0.3)}s` }}
             >
+              <div className="team-card-media">
+                {member.photo ? (
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    fill
+                    className="team-card-photo"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                ) : (
+                  <div className="team-card-avatar">
+                    {getMemberInitials(member.name)}
+                  </div>
+                )}
+              </div>
               <div className="team-card-head">
                 <h3>{member.name}</h3>
                 <p className="team-role">{member.role}</p>
