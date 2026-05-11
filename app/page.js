@@ -45,6 +45,101 @@ const STAT_ITEMS = [
   { label: "States Covered", end: 18, suffix: "+" },
 ];
 
+const INFRASTRUCTURE_ITEMS = [
+  {
+    title: "Quality Testing Laboratory",
+    description: "Dedicated lab setup for quality checks and formulation accuracy.",
+    src: "/Infrastructure/Laboratory.jpeg",
+  },
+  {
+    title: "Advanced Machinery",
+    description:
+      "Modern manufacturing machinery to ensure consistent and scalable output.",
+    src: "/Infrastructure/Machinary 2.jpeg",
+  },
+  {
+    title: "Integrated Production Plant",
+    description:
+      "Efficient processing and packaging units built for reliable delivery.",
+    src: "/Infrastructure/Plant.jpeg",
+  },
+  {
+    title: "Team of Adicon",
+    description:
+      "Experienced professionals committed to farmer-first product quality.",
+    src: "/Infrastructure/Team of Adicon.jpeg",
+  },
+  {
+    title: "Fire Safety Systems",
+    description:
+      "Safety-first infrastructure with strong preventive protection systems.",
+    src: "/Infrastructure/Fire Safty.jpeg",
+  },
+  {
+    title: "Infrastructure Snapshot 1",
+    description:
+      "Additional on-ground view of our operational setup and facilities.",
+    src: "/Infrastructure/WhatsApp Image 2026-05-08 at 5.11.11 PM.jpeg",
+  },
+  {
+    title: "Infrastructure Snapshot 2",
+    description:
+      "Facility overview reflecting day-to-day operations and readiness.",
+    src: "/Infrastructure/WhatsApp Image 2026-05-08 at 5.32.23 PM.jpeg",
+  },
+];
+
+const TEAM_MEMBERS = [
+  {
+    name: "Dhruv Patoliya",
+    role: "Managing Director & CEO",
+    experience: "B.Sc. (Hons.) Agriculture",
+    bio: "Young and visionary agri entrepreneur focused on modern crop protection, farmer needs, and innovation-led growth.",
+    focus:
+      "Leads strategic growth with high-quality pesticides, herbicides, fungicides, insecticides, and plant growth solutions.",
+  },
+  {
+    name: "Deep Kaladiya",
+    role: "Production Head",
+    experience: "Agrochemical Production Expert",
+    bio: "Drives manufacturing excellence across formulation, process control, quality, and operational efficiency.",
+    focus:
+      "Strengthens productivity through advanced techniques, process optimization, and strict quality assurance systems.",
+  },
+  {
+    name: "Rasikbhai H. Patoliya",
+    role: "Chief Technical Officer (CTO)",
+    experience: "35+ Years Experience",
+    bio: "Veteran technical leader with deep expertise in formulation technology, product development, and industrial operations.",
+    focus:
+      "Guides research-led innovation, compliance, and technology adoption to maintain superior product performance.",
+  },
+  {
+    name: "Mukesh Panwar",
+    role: "Chief Marketing Officer (CMO)",
+    experience: "25+ Years Experience",
+    bio: "Experienced marketing strategist driving business expansion, channel development, and brand growth in agrochemicals.",
+    focus:
+      "Leads customer-centric market initiatives, dealer networks, and sustainable business development across regions.",
+  },
+  {
+    name: "Yash Gondaliya",
+    role: "Accounts Head",
+    experience: "12+ Years Experience",
+    bio: "Finance professional managing accounting, taxation, audits, and financial controls with precision and transparency.",
+    focus:
+      "Ensures strong budgeting, compliance, and reporting systems that support disciplined and stable business growth.",
+  },
+  {
+    name: "Nileshbhai Hirapara",
+    role: "HR Head",
+    experience: "18+ Years Experience",
+    bio: "People-centric HR leader focused on workforce development, engagement, and organizational discipline.",
+    focus:
+      "Builds a productive culture through talent management, employee welfare, policy implementation, and team alignment.",
+  },
+];
+
 export default function HomePage() {
   const leafBgRef = useRef(null);
   const heroParticlesRef = useRef(null);
@@ -225,6 +320,12 @@ export default function HomePage() {
           </li>
           <li>
             <a href="#why">Why Us</a>
+          </li>
+          <li>
+            <a href="#infrastructure">Infrastructure</a>
+          </li>
+          <li>
+            <a href="#team">Team</a>
           </li>
           <li>
             <a href="#contact">Contact</a>
@@ -471,6 +572,94 @@ export default function HomePage() {
               registration certification.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="section infrastructure-section" id="infrastructure">
+        <div className="section-header reveal">
+          <div className="section-tag">Infrastructure</div>
+          <h2 className="section-title">
+            Built with <span>Precision</span> and Scale
+          </h2>
+          <p className="section-subtitle">
+            From lab and machinery to plant operations and team readiness — our
+            infrastructure powers dependable quality at every stage.
+          </p>
+        </div>
+
+        <div className="infrastructure-grid">
+          {INFRASTRUCTURE_ITEMS.map((item, index) => (
+            <article
+              key={item.src}
+              className="infrastructure-card reveal"
+              style={{ transitionDelay: `${Math.min(index * 0.06, 0.3)}s` }}
+            >
+              <div className="infrastructure-image-wrap">
+                <Image
+                  src={item.src}
+                  alt={item.title}
+                  fill
+                  className="infrastructure-image"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <div className="infrastructure-content">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section team-section" id="team">
+        <div className="section-header reveal">
+          <div className="section-tag">Leadership Team</div>
+          <h2 className="section-title">
+            Team of <span>Adicon</span>
+          </h2>
+          <p className="section-subtitle">
+            Dedicated professionals with deep technical, production, marketing,
+            finance, and HR expertise driving farmer-first growth.
+          </p>
+        </div>
+
+        <div className="team-hero-card reveal">
+          <div className="team-hero-image-wrap">
+            <Image
+              src="/Infrastructure/Team of Adicon.jpeg"
+              alt="Team of Adicon"
+              fill
+              className="team-hero-image"
+              sizes="(max-width: 768px) 100vw, 1100px"
+            />
+          </div>
+          <div className="team-hero-content">
+            <h3>People Behind the Performance</h3>
+            <p>
+              At Adicon Pesticides Pvt. Ltd., our leadership combines
+              experience, innovation, and discipline to deliver reliable crop
+              protection solutions for modern Indian agriculture.
+            </p>
+          </div>
+        </div>
+
+        <div className="team-grid">
+          {TEAM_MEMBERS.map((member, index) => (
+            <article
+              key={member.name}
+              className="team-card reveal"
+              style={{ transitionDelay: `${Math.min(index * 0.06, 0.3)}s` }}
+            >
+              <div className="team-card-head">
+                <h3>{member.name}</h3>
+                <p className="team-role">{member.role}</p>
+                <span className="team-exp">{member.experience}</span>
+              </div>
+              <p className="team-bio">{member.bio}</p>
+              <p className="team-focus">{member.focus}</p>
+            </article>
+          ))}
         </div>
       </section>
 
