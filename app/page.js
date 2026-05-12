@@ -112,7 +112,7 @@ const TEAM_MEMBERS = [
     name: "Rasikbhai H. Patoliya",
     role: "Chief Technical Officer (CTO)",
     experience: "35+ Years Experience",
-    photo: "/Team Adicon/Rasik bhai.jpeg",
+    photo: "/Team Adicon/Rasik bhai.jpeg?v=2",
     bio: "Veteran technical leader with deep expertise in formulation technology, product development, and industrial operations.",
     focus:
       "Guides research-led innovation, compliance, and technology adoption to maintain superior product performance.",
@@ -121,6 +121,7 @@ const TEAM_MEMBERS = [
     name: "Mukesh Panwar",
     role: "Chief Marketing Officer (CMO)",
     experience: "25+ Years Experience",
+    photo: "/Team Adicon/Mukesh Bhai.jpeg",
     bio: "Experienced marketing strategist driving business expansion, channel development, and brand growth in agrochemicals.",
     focus:
       "Leads customer-centric market initiatives, dealer networks, and sustainable business development across regions.",
